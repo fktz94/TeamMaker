@@ -5,12 +5,13 @@ export function ContinueButton({
   handlePress,
   buttonStyles,
   textButtonStyles,
+  isDisabled = false,
 }) {
   const styles = StyleSheet.create({
     buttonContinue: {
       paddingHorizontal: 16,
       alignSelf: "center",
-      backgroundColor: "lightblue",
+      backgroundColor: isDisabled ? "lightgray" : "lightblue",
       paddingVertical: 12,
       borderWidth: 1,
       borderRadius: 8,
@@ -22,6 +23,7 @@ export function ContinueButton({
     <Pressable
       style={[styles.buttonContinue, buttonStyles]}
       onPress={handlePress}
+      disabled={isDisabled}
     >
       <Text style={[styles.buttonContinueText, textButtonStyles]}>{text}</Text>
     </Pressable>
