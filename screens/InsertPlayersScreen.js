@@ -27,7 +27,7 @@ function PlayerListItem({ index, name, handleDeleteItem }) {
         flex: 1,
       }}
     >
-      <Text style={{ fontSize: 20, flex: 1 }}>
+      <Text style={{ fontSize: 16, flex: 1 }}>
         {index + 1}. {name}
       </Text>
       <Pressable
@@ -56,24 +56,14 @@ export default function InsertPlayersScreen({ navigation, route }) {
     params: { playersQtyPerTeam },
   } = route;
   const [playersName, setPlayersName] = useState("");
-  const [playersList, setPlayersList] = useState([
-    { name: "Martin Palermo", id: 1 },
-    { name: "asdsde", id: 2 },
-    { name: "deas", id: 3 },
-    { name: "wewe", id: 4 },
-    { name: "fdsasaak", id: 5 },
-    { name: "dsadas", id: 6 },
-    { name: "aqwe1", id: 7 },
-    { name: "asdasd", id: 8 },
-    { name: "dsadsad", id: 9 },
-    { name: "sadsa", id: 10 },
-  ]);
+  const [playersList, setPlayersList] = useState([]);
 
   const totalPlayers = playersQtyPerTeam * 2;
   const remainingPlayers = totalPlayers - playersList.length;
   const isAllPlayers = playersList.length === totalPlayers;
 
   const handlePlayersList = () => {
+    if (!playersName) return;
     setPlayersList((prev) => {
       return [...prev, { name: playersName, id: uuid.v4() }];
     });
@@ -203,7 +193,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     gap: 4,
   },
-
   text: {
     fontSize: 24,
     textAlign: "center",
