@@ -6,7 +6,7 @@ import {
   StyleSheet,
   Pressable,
 } from "react-native";
-import { styles as homeScreenStyles } from "./HomeScreen";
+import { ContinueButton, styles as homeScreenStyles } from "./HomeScreen";
 import { useState } from "react";
 
 function QtyButton({ text, handleButtonPress, playersQty }) {
@@ -46,7 +46,7 @@ function QtyButton({ text, handleButtonPress, playersQty }) {
   );
 }
 
-export default function PlayersQtyScreen() {
+export default function PlayersQtyScreen({ navigation }) {
   const [playersQtyPerTeam, setPlayersQtyPerTeam] = useState(5);
 
   const handlePlayersQtyPerTeam = (value) => {
@@ -55,6 +55,11 @@ export default function PlayersQtyScreen() {
     if (value === "-" && playersQtyPerTeam > 2)
       setPlayersQtyPerTeam((prevState) => prevState - 1);
   };
+
+  const handleContinue = () =>
+    navigation.navigate("InsertPlayersScreen", {
+      playersQtyPerTeam,
+    });
 
   return (
     <SafeAreaView style={homeScreenStyles.container}>
@@ -77,9 +82,11 @@ export default function PlayersQtyScreen() {
           playersQty={playersQtyPerTeam}
         />
       </View>
-      <Pressable style={styles.buttonContinue} onPress={() => {}}>
-        <Text style={styles.buttonContinueText}>Continue</Text>
-      </Pressable>
+      <ContinueButton
+        text="Continue!"
+        handlePress={handleContinue}
+        buttonStyles={{ width: "60%" }}
+      />
     </SafeAreaView>
   );
 }
@@ -102,13 +109,4 @@ const styles = StyleSheet.create({
     fontSize: 32,
     textAlign: "center",
   },
-  buttonContinue: {
-    width: "60%",
-    alignSelf: "center",
-    backgroundColor: "lightblue",
-    paddingVertical: 12,
-    borderWidth: 1,
-    borderRadius: 8,
-  },
-  buttonContinueText: { textAlign: "center", fontSize: 18 },
 });
