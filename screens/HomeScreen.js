@@ -15,6 +15,7 @@ export function ContinueButton({
       paddingVertical: 12,
       borderWidth: 1,
       borderRadius: 8,
+      elevation: 5,
     },
     buttonContinueText: { textAlign: "center", fontSize: 18 },
   });

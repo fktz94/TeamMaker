@@ -7,7 +7,6 @@ import {
   SafeAreaView,
   ScrollView,
   Pressable,
-  Button,
 } from "react-native";
 import { ContinueButton, styles as homeScreenStyles } from "./HomeScreen";
 import { useState } from "react";
@@ -19,15 +18,17 @@ function PlayerListItem({ index, name, handleDeleteItem }) {
       style={{
         flexDirection: "row",
         justifyContent: "space-between",
+        alignItems: "center",
         width: "100%",
         borderWidth: 1,
         borderRadius: 6,
         padding: 4,
         backgroundColor: "darkseagreen",
+        flex: 1,
       }}
     >
-      <Text style={{ fontSize: 20 }}>
-        {index + 1} - {name}
+      <Text style={{ fontSize: 20, flex: 1 }}>
+        {index + 1}. {name}
       </Text>
       <Pressable
         style={{ justifyContent: "center" }}
@@ -50,12 +51,23 @@ function PlayerListItem({ index, name, handleDeleteItem }) {
   );
 }
 
-export default function InsertPlayersScreen({ route }) {
+export default function InsertPlayersScreen({ navigation, route }) {
   const {
     params: { playersQtyPerTeam },
   } = route;
   const [playersName, setPlayersName] = useState("");
-  const [playersList, setPlayersList] = useState([]);
+  const [playersList, setPlayersList] = useState([
+    { name: "Martin Palermo", id: 1 },
+    { name: "asdsde", id: 2 },
+    { name: "deas", id: 3 },
+    { name: "wewe", id: 4 },
+    { name: "fdsasaak", id: 5 },
+    { name: "dsadas", id: 6 },
+    { name: "aqwe1", id: 7 },
+    { name: "asdasd", id: 8 },
+    { name: "dsadsad", id: 9 },
+    { name: "sadsa", id: 10 },
+  ]);
 
   const totalPlayers = playersQtyPerTeam * 2;
   const remainingPlayers = totalPlayers - playersList.length;
@@ -71,6 +83,12 @@ export default function InsertPlayersScreen({ route }) {
   const handleDeleteItem = (id) => {
     setPlayersList((prev) => {
       return prev.filter((item) => item.id !== id);
+    });
+  };
+
+  const handleCreateTeams = () => {
+    navigation.navigate("CreatedTeamsScreen", {
+      playersList: playersList.map((item) => item.name),
     });
   };
 
@@ -94,7 +112,7 @@ export default function InsertPlayersScreen({ route }) {
             ? `${
                 remainingPlayers > 2 ? "Still " : "Just "
               }${remainingPlayers} to go!`
-            : "All players inserted"}
+            : "All players created!"}
         </Text>
         {!isAllPlayers && (
           <>
@@ -120,6 +138,7 @@ export default function InsertPlayersScreen({ route }) {
           text="Click to Create Teams!"
           buttonStyles={{ backgroundColor: "lightgreen" }}
           textButtonStyles={{ fontWeight: "bold" }}
+          handlePress={handleCreateTeams}
         />
       )}
       <View style={styles.bottomContainer}>
