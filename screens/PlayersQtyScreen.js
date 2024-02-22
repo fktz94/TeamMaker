@@ -56,10 +56,16 @@ export default function PlayersQtyScreen({ navigation }) {
       setPlayersQtyPerTeam((prevState) => prevState - 1);
   };
 
-  const handleContinue = () =>
+  const handleContinue = () => {
+    if (isNaN(+playersQtyPerTeam)) return;
     navigation.navigate("InsertPlayersScreen", {
       playersQtyPerTeam,
     });
+  };
+
+  const handleInputText = (text) => {
+    setPlayersQtyPerTeam(text);
+  };
 
   return (
     <SafeAreaView style={homeScreenStyles.container}>
@@ -71,9 +77,9 @@ export default function PlayersQtyScreen({ navigation }) {
           playersQty={playersQtyPerTeam}
         />
         <TextInput
-          onChangeText={setPlayersQtyPerTeam}
+          onChangeText={handleInputText}
           value={playersQtyPerTeam.toString()}
-          keyboardType="numeric"
+          readOnly
           style={styles.textInputNumber}
         />
         <QtyButton
@@ -103,6 +109,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 32,
     backgroundColor: "white",
+    color: "black",
     fontWeight: "bold",
   },
   text: {
